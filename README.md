@@ -2,6 +2,8 @@
 
 [1.1 课程导学](./docs/1.1、课程导学.md)
 
+[1.2 课程介绍](./docs/1.2、课程介绍.md)
+
 # 参考资料：
 
 https://www.bilibili.com/video/av83350170?p=7
