@@ -1,6 +1,8 @@
-# filestore-server
+# 一、filestore-server分布式网盘
 
-参考资料：
+[1.1 课程导学](./docs/1.1、课程导学.md)
+
+# 参考资料：
 
 https://www.bilibili.com/video/av83350170?p=7
 
