@@ -87,6 +87,31 @@ func GetFileMetaHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	w.Write(data)
+}
 
+// DownloadHandler : 文件下载接口
+func DownloadHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	fsha1 := r.Form.Get("filehash")
+	fm := meta.GetFileMeta(fsha1)
+	// TODO：加载已存储到云端本地的文件内容，并返回到客户端
+	f, err := os.Open(fm.Location)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	// 关闭文件句柄
+	defer f.Close()
+
+	// 将内容读取出来,使用ReadAll方法全部加载到内存里，这里都是小文件，所以可以这么操作，如果是大文件，则需要使用流的方式实现
+	data, err := ioutil.ReadAll(f)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/octect-stream")
+	// attachment表示文件将会提示下载到本地，而不是直接在浏览器中打开
+	w.Header().Set("content-disposition", "attachment; filename=\""+fm.FileName+"\"")
 	w.Write(data)
 }
