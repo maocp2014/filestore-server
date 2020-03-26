@@ -6,10 +6,10 @@ import (
 	"net/http"
 )
 
-func main(){
-	http.HandleFunc("/file/upload", handler.UploadHandler)
+func main() {
+	http.HandleFunc("/file/upload", handler.FileUploadHandler)
 	err := http.ListenAndServe(":8090", nil)
-	if err != nil{
+	if err != nil {
 		fmt.Printf("Failed to start server, err:%s", err.Error())
 	}
 }
