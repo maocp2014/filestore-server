@@ -1,6 +1,6 @@
 package handler
 
-import(
+import (
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -18,6 +18,6 @@ func FileUploadHandler(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, string(data))
 	} else if r.Method == "POST" {
 		// 接收文件流及存储到本地目录
-		
+
 	}
 }
