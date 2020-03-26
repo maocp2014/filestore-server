@@ -6,8 +6,8 @@ import(
 	"net/http"
 )
 
-// UploadHandler : 处理文件上传
-func UploadHandler(w http.ResponseWriter, r *http.Request) {
+// FileUploadHandler : 处理文件上传
+func FileUploadHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		//返回上传 HTML 界面
 		data, err := ioutil.ReadFile("./static/view/index.html")
