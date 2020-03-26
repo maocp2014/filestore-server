@@ -8,7 +8,7 @@ import (
 
 func main() {
 	http.HandleFunc("/file/upload", handler.FileUploadHandler)
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8090", nil)
 	if err != nil {
 		fmt.Printf("Failed to start server, err:%s", err.Error())
 	}
