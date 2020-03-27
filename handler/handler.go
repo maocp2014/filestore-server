@@ -66,6 +66,8 @@ func FileUploadHandler(w http.ResponseWriter, r *http.Request) {
 
 		// 上传成功重定向
 		http.Redirect(w, r, "/file/upload/suc", http.StatusFound)
+
+		fmt.Printf("ok")
 	}
 }
 
