@@ -16,6 +16,7 @@ func OnFileUploadFinished(filehash string, filename string,
 		fmt.Println("Failed to prepare statement, err:" + err.Error())
 		return false
 	}
+	// 资源关闭
 	defer stmt.Close()
 	// 执行sql插入语句
 	ret, err := stmt.Exec(filehash, filename, filesize, fileaddr)
