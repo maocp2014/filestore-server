@@ -1,6 +1,7 @@
 package db
 
 import (
+	"database/sql"
 	mydb "filestore-server/db/mysql"
 	"fmt"
 )
@@ -32,4 +33,38 @@ func OnFileUploadFinished(filehash string, filename string,
 		return true
 	}
 	return false
+}
+
+// TableFile : 文件表结构体
+type TableFile struct {
+	FileHash string
+	FileName sql.NullString
+	FileSize sql.NullInt64
+	FileAddr sql.NullString
+}
+
+// GetFileMeta : 从mysql获取文件元信息
+func GetFileMeta(filehash string) (*TableFile, error) {
+	// sql预编译，防止sql注入攻击
+	stmt, err := mydb.DBConn().Prepare(
+		"select file_sha1,file_addr,file_name,file_size from tbl_file " +
+			"where file_sha1=? and status=1 limit 1")
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil, err
+	}
+	// 资源关闭
+	defer stmt.Close()
+
+	// 构建一个临时的TableFile空结构
+	tfile := TableFile{}
+
+	// 这里加了引用符&
+	err = stmt.QueryRow(filehash).Scan(
+		&tfile.FileHash, &tfile.FileAddr, &tfile.FileName, &tfile.FileSize)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil, err
+	}
+	return &tfile, nil
 }
