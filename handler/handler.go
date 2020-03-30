@@ -81,7 +81,16 @@ func GetFileMetaHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 获取文件的filehash
 	filehash := r.Form["filehash"][0]
-	fMeta := meta.GetFileMeta(filehash)
+	// 从程序内存中获取文件元信息
+	// fMeta := meta.GetFileMeta(filehash)
+
+	// 从数据库中获取文件元信息
+	fMeta, err := meta.GetFileMetaDB(filehash)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	data, err := json.Marshal(fMeta)
 
 	if err != nil {
