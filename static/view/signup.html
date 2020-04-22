@@ -98,11 +98,11 @@
       success: function (data, textStatus, jqXHR) {
         if (data == 'SUCCESS') {
           // 成功后跳到登录页
-          document.getElementById("login_hint").style.display = "block";
-          setTimeout(() => {
-            window.location.href = '/static/view/signin.html';
-          }, 2000);
-
+          // document.getElementById("login_hint").style.display = "block";
+          // setTimeout(() => {
+          //   window.location.href = '/static/view/signin.html';
+          // }, 2000);
+          alert('SUCCESS');
         } else {
           alert('注册失败');
         }
