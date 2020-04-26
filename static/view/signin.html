@@ -13,21 +13,19 @@
   <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-  <script lang="javascript">
-  </script>
 </head>
 
 <body>
   <form>
     <div style="width:500px;margin:10px auto;text-align: center;">
-      <div style="font-size:28px;font-weight:bold;margin:0px auto;">用户注册</div>
+      <div style="font-size:28px;font-weight:bold;margin:0px auto;">用户登录</div>
       <br />
       <table style="width:100%;text-align: left;">
         <tbody>
           <tr style="margin-bottom: 20px;">
             <td>
               <span class="p">*</span>
-              <label for="username" class="l"> 新用户名:</label>
+              <label for="username" class="l"> 用户名:</label>
             </td>
             <td>
               <input id="username" type="text" style="height:30px;width:250px;padding-right:50px;">
@@ -50,25 +48,11 @@
             <td><br></td>
             <td></td>
           </tr>
-          <tr style="margin-bottom: 20px;">
-            <td>
-              <span class="p">*</span>
-              <label for="passwordc" class="l"> 确认密码:</label>
-            </td>
-            <td>
-              <input id="passwordc" type="text" style="height:30px;width:250px;padding-right:50px;">
-            </td>
-          </tr>
-          <tr>
-            <td><br></td>
-            <td></td>
-          </tr>
           <tr>
             <td>
             </td>
             <td>
-              <input class="btn btn-success" type="button" style="margin:0 auto;width:250px;" value="点击注册" onclick='onSignup()' />
-              <label name='login_hint' id='login_hint' style='display:none'>注册成功，２秒后跳转到登录页面...</label>
+              <input class="btn btn-success" type="button" style="margin:0 auto;width:250px;" value="登录" onclick='onSignin()' />
             </td>
           </tr>
         </tbody>
@@ -78,11 +62,11 @@
 </body>
 
 <script lang="javascript">
-  function onSignup() {
+  function onSignin() {
     var username = document.getElementById('username');
     var password = document.getElementById('password');
     $.ajax({
-      url: "/user/signup",
+      url: "/user/signin",
       type: "POST",
       data: {
         "username": username.value,
@@ -95,17 +79,11 @@
           alert(textStatus);
         }
       },
-      success: function (data, textStatus, jqXHR) {
-        if (data == 'SUCCESS') {
-          // 成功后跳到登录页
-          document.getElementById("login_hint").style.display = "block";
-          setTimeout(() => {
-            window.location.href = '/static/view/signin.html';
-          }, 2000);
-          // alert('SUCCESS');
-        } else {
-          alert('注册失败');
-        }
+      success: function (body, textStatus, jqXHR) {
+        var resp = JSON.parse(body);
+        localStorage.setItem("token", resp.data.Token)
+        localStorage.setItem("username", resp.data.Username)
+        window.location.href = resp.data.Location;
       }
     });
   }

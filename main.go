@@ -21,7 +21,9 @@ func main() {
 	http.HandleFunc("/file/delete", handler.FileDeleteHandler)
 
 	// 用户注册
-	http.HandleFunc("/user/signup", handler.SignupHandler)
+	http.HandleFunc("/user/signup", handler.SignUpHandler)
+	// 用户登录
+	http.HandleFunc("/user/signin", handler.SignInHandler)
 
 	//  端口监听
 	err := http.ListenAndServe(":8090", nil)
